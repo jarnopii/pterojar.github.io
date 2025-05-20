@@ -129,10 +129,9 @@
     </select>
 
     <label>Pilih Platform:</label>
-    <select class="platform-select">
-      <option value="-- pilih platform --">-- pilih platform --</option>
-      <option value="whatsapp">whatsApp</option>
-      <option value="telegram">telegram</option>
+    <select class="platform-select" onchange="handlePlatform(this.value)">
+      <option value="whatsapp">WhatsApp</option>
+      <option value="telegram">Telegram</option>
     </select>
 
     <div id="payment-info"></div>
@@ -175,6 +174,8 @@
       } else {
         info.innerHTML = "";
         qr.style.display = "none";
+      } else {
+        alert("Silakan pilih payment terlebih dahulu.");
       }
     }
 

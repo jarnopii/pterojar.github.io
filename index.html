@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel Pterodactyl</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
+    header {
+      background: #007bff;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .menu-icon {
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .menu {
+      display: none;
+      background: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      position: absolute;
+      top: 3.5rem;
+      left: 1rem;
+      border-radius: 0.5rem;
+      z-index: 99;
+    }
+    .menu a {
+      display: block;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: #333;
+      border-bottom: 1px solid #eee;
+    }
+    .menu a:last-child {
+      border-bottom: none;
+    }
+    .container {
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    .box {
+      border: 2px solid #ccc;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+    .box.selected {
+      border-color: #007bff;
+      background: #e7f1ff;
+    }
+    .payment-methods {
+      margin: 1rem 0;
+    }
+    .payment-option {
+      margin-bottom: 0.75rem;
+    }
+    .payment-option button {
+      margin-left: 0.5rem;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 0.25rem;
+    }
+    .qris-img {
+      display: none;
+      max-width: 100%;
+      margin-top: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+    }
+    button.order-btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 1.5rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+  <div style="font-weight: bold;">Panel Pterodactyl</div>
+  <div></div>
+</header>
+
+<div class="menu" id="menu">
+  <a href="https://link-home-kamu.com">Home</a>
+  <a href="https://link-support-kamu.com">Contact Support</a>
+</div>
+
+<div class="container">
+  <h2>Pilih Paket Panel</h2>
+  <div id="panels">
+    <div class="box" onclick="selectPanel(this, '2GB RAM 70% CPU - Rp 1000')">2GB RAM 70% CPU - Rp 1000</div>
+    <div class="box" onclick="selectPanel(this, '4GB RAM 100% CPU - Rp 2000')">4GB RAM 100% CPU - Rp 2000</div>
+    <div class="box" onclick="selectPanel(this, '6GB RAM 100% CPU - Rp 3000')">6GB RAM 100% CPU - Rp 3000</div>
+    <div class="box" onclick="selectPanel(this, '8GB RAM 150% CPU - Rp 4000')">8GB RAM 150% CPU - Rp 4000</div>
+    <div class="box" onclick="selectPanel(this, '10GB RAM 200% CPU - Rp 5000')">10GB RAM 200% CPU - Rp 5000</div>
+    <div class="box" onclick="selectPanel(this, 'Unlimited RAM & CPU - Rp 7000')">Unlimited RAM & CPU - Rp 7000</div>
+  </div>
+
+  <h3>Pilih Metode Pembayaran</h3>
+  <div class="payment-methods">
+    <div class="payment-option">
+      <input type="radio" name="payment" value="dana" onchange="showQR(false)"> 
+      Dana (<span id="danaNumber">082112345678</span>) 
+      <button onclick="copyNumber('danaNumber')">Copy</button>
+    </div>
+    <div class="payment-option">
+      <input type="radio" name="payment" value="gopay" onchange="showQR(false)"> 
+      GoPay (<span id="gopayNumber">081298765432</span>) 
+      <button onclick="copyNumber('gopayNumber')">Copy</button>
+    </div>
+    <div class="payment-option">
+      <input type="radio" name="payment" value="qris" onchange="showQR(true)"> QRIS
+    </div>
+    <img id="qris" class="qris-img" src="https://example.com/namafileqrcodekamu.png" alt="QRIS Code">
+  </div>
+
+  <h3>Platform Pesan</h3>
+  <div class="payment-option">
+    <input type="radio" name="platform" value="whatsapp"> WhatsApp
+  </div>
+  <div class="payment-option">
+    <input type="radio" name="platform" value="telegram"> Telegram
+  </div>
+
+  <button class="order-btn" onclick="orderNow()">Pesan Sekarang</button>
+</div>
+
+<footer>
+  &copy; 2025 Jardongo. All rights reserved.
+</footer>
+
+<script>
+  let selectedPanel = '';
+
+  function toggleMenu() {
+    const menu = document.getElementById('menu');
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+  }
+
+  function selectPanel(el, text) {
+    document.querySelectorAll('.box').forEach(box => box.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedPanel = text;
+  }
+
+  function showQR(show) {
+    document.getElementById('qris').style.display = show ? 'block' : 'none';
+  }
+
+  function copyNumber(id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      alert(`Nomor ${text} berhasil disalin ke clipboard.`);
+    }).catch(err => {
+      alert('Gagal menyalin nomor.');
+    });
+  }
+
+  function orderNow() {
+    const platform = document.querySelector('input[name="platform"]:checked');
+    const payment = document.querySelector('input[name="payment"]:checked');
+
+    if (!selectedPanel || !platform || !payment) {
+      alert('Silakan pilih paket, metode pembayaran, dan platform terlebih dahulu.');
+      return;
+    }
+
+    const message = `Halo, saya ingin memesan:\n\nPaket: ${selectedPanel}\nPembayaran: ${payment.value.toUpperCase()}\n\nSaya akan kirim bukti pembayaran setelah ini.`;
+
+    let url = '';
+    if (platform.value === 'whatsapp') {
+      url = `https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
+    } else {
+      url = `https://t.me/usernamekamu?text=${encodeURIComponent(message)}`;
+    }
+
+    window.location.href = url;
+  }
+</script>
+
+</body>
+</html>

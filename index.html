@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel Pterodactyl</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f3f4f6;
+    }
+
+    header {
+      background: #1f2937;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+
+    .menu-toggle {
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .menu {
+      display: none;
+      position: absolute;
+      top: 50px;
+      left: 10px;
+      background: #374151;
+      border-radius: 6px;
+      padding: 10px;
+    }
+
+    .menu a {
+      display: block;
+      color: white;
+      padding: 5px 10px;
+      text-decoration: none;
+    }
+
+    .menu a:hover {
+      background: #4b5563;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border 0.2s;
+    }
+
+    .card.selected {
+      border: 2px solid #3b82f6;
+    }
+
+    .platform-select, .payment-select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0 20px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .order-btn {
+      display: block;
+      background: #10b981;
+      color: white;
+      padding: 12px;
+      text-align: center;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .note {
+      font-size: 14px;
+      color: #555;
+      margin-top: 10px;
+    }
+
+    #qr-image {
+      margin-top: 15px;
+      display: none;
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <h1>Panel Pterodactyl</h1>
+    <div class="menu" id="menu">
+      <a href="https://your-homepage-link.com" target="_blank">Home</a>
+      <a href="https://wa.me/6283856752850" target="_blank">Contact Support</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <h2>Pilih Paket Panel</h2>
+
+    <div class="card" onclick="selectCard(this)">2GB RAM, 70% CPU - <strong>Rp 1.000</strong></div>
+    <div class="card" onclick="selectCard(this)">4GB RAM, 100% CPU - <strong>Rp 2.000</strong></div>
+    <div class="card" onclick="selectCard(this)">6GB RAM, 100% CPU - <strong>Rp 3.000</strong></div>
+    <div class="card" onclick="selectCard(this)">8GB RAM, 150% CPU - <strong>Rp 4.000</strong></div>
+    <div class="card" onclick="selectCard(this)">10GB RAM, 200% CPU - <strong>Rp 5.000</strong></div>
+    <div class="card" onclick="selectCard(this)">Unlimited RAM & CPU - <strong>Rp 7.000</strong></div>
+
+    <label>Pilih Metode Pembayaran:</label>
+    <select class="payment-select" onchange="handlePayment(this.value)">
+      <option value="">-- Pilih --</option>
+      <option value="dana">Dana</option>
+      <option value="gopay">GoPay</option>
+      <option value="qris">QRIS</option>
+    </select>
+
+    <label>Pilih Platform:</label>
+    <select class="platform-select">
+      <option value="Whatsapp">WhatsApp</option>
+      <option value="Telegram">Telegram</option>
+    </select>
+
+    <div id="payment-info"></div>
+    <img id="qr-image" src="https://i.postimg.cc/ydF74xxS/20250520-114937.jpg" alt="QR Code Pembayaran" />
+
+    <button class="order-btn" onclick="pesan()">Pesan Sekarang</button>
+
+    <p class="note">
+      Setelah menekan "Pesan Sekarang", Anda akan diarahkan ke platform pilihan Anda. Mohon kirimkan bukti pembayaran di sana.
+    </p>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("menu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    let selectedCard = null;
+    function selectCard(card) {
+      if (selectedCard) selectedCard.classList.remove("selected");
+      card.classList.add("selected");
+      selectedCard = card;
+    }
+
+    function handlePayment(value) {
+      const info = document.getElementById("payment-info");
+      const qr = document.getElementById("qr-image");
+
+      if (value === "dana") {
+        qr.style.display = "none";
+        info.innerHTML = "<p>Silakan transfer ke nomor Dana: <strong>083856752850</strong></p>";
+      } else if (value === "gopay") {
+        qr.style.display = "none";
+        info.innerHTML = "<p>Silakan transfer ke nomor GoPay: <strong>083856752850</strong></p>";
+      } else if (value === "qris") {
+        info.innerHTML = "<p>Scan kode QR berikut untuk pembayaran:</p>";
+        qr.src = "https://i.postimg.cc/ydF74xxS/20250520-114937.jpg"; // Ganti dengan link QR kamu
+        qr.style.display = "block";
+      } else {
+        info.innerHTML = "";
+        qr.style.display = "none";
+      }
+    }
+
+    function pesan() {
+      const platform = document.querySelector(".platform-select").value;
+      const selected = document.querySelector(".card.selected");
+      if (!selected) {
+        alert("Silakan pilih paket panel terlebih dahulu.");
+        return;
+      }
+
+      const paket = selected.textContent.trim();
+
+      const text = encodeURIComponent(`Halo, saya ingin memesan paket berikut:\n\n${paket}\n\nSaya sudah melakukan pembayaran. Mohon dicek.`);
+
+      if (platform === "whatsapp") {
+        window.location.href = `https://wa.me/6283856752850?text=${text}`;
+      } else if (platform === "telegram") {
+        window.location.href = `https://t.me/fjrnshop?text=${text}`;
+      } else {
+        alert("Silakan pilih platform terlebih dahulu.");
+      }
+    }
+  </script>
+</body>
+</html>

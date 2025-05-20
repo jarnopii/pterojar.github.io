@@ -31,7 +31,6 @@
       top: 3.5rem;
       left: 1rem;
       border-radius: 0.5rem;
-      z-index: 99;
     }
     .menu a {
       display: block;
@@ -63,26 +62,14 @@
       margin: 1rem 0;
     }
     .payment-option {
-      margin-bottom: 0.75rem;
-    }
-    .payment-option button {
-      margin-left: 0.5rem;
-      padding: 0.2rem 0.6rem;
-      font-size: 0.8rem;
-      cursor: pointer;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 0.25rem;
+      margin-bottom: 0.5rem;
     }
     .qris-img {
       display: none;
       max-width: 100%;
       margin-top: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 0.5rem;
     }
-    button.order-btn {
+    button {
       background: #007bff;
       color: white;
       border: none;
@@ -111,7 +98,7 @@
 
 <div class="menu" id="menu">
   <a href="https://link-home-kamu.com">Home</a>
-  <a href="https://link-support-kamu.com">Contact Support</a>
+  <a href="https://wa.me/6283856752850">Contact Support</a>
 </div>
 
 <div class="container">
@@ -128,19 +115,15 @@
   <h3>Pilih Metode Pembayaran</h3>
   <div class="payment-methods">
     <div class="payment-option">
-      <input type="radio" name="payment" value="dana" onchange="showQR(false)"> 
-      Dana (<span id="danaNumber">082112345678</span>) 
-      <button onclick="copyNumber('danaNumber')">Copy</button>
+      <input type="radio" name="payment" value="dana" onchange="showQR(false)"> Dana (083856752850)
     </div>
     <div class="payment-option">
-      <input type="radio" name="payment" value="gopay" onchange="showQR(false)"> 
-      GoPay (<span id="gopayNumber">081298765432</span>) 
-      <button onclick="copyNumber('gopayNumber')">Copy</button>
+      <input type="radio" name="payment" value="gopay" onchange="showQR(false)"> GoPay (083856752850)
     </div>
     <div class="payment-option">
       <input type="radio" name="payment" value="qris" onchange="showQR(true)"> QRIS
     </div>
-    <img id="qris" class="qris-img" src="https://example.com/namafileqrcodekamu.png" alt="QRIS Code">
+    <img id="qris" class="qris-img" src="https://i.postimg.cc/ydF74xxS/20250520-114937.jpg" alt="QRIS Code">
   </div>
 
   <h3>Platform Pesan</h3>
@@ -151,16 +134,15 @@
     <input type="radio" name="platform" value="telegram"> Telegram
   </div>
 
-  <button class="order-btn" onclick="orderNow()">Pesan Sekarang</button>
+  <button onclick="orderNow()">Pesan Sekarang</button>
 </div>
 
 <footer>
-  &copy; 2025 Jardongo. All rights reserved.
+  &copy; 2025 FaaStore.Id - Solusi hosting terbaik.
 </footer>
 
 <script>
   let selectedPanel = '';
-
   function toggleMenu() {
     const menu = document.getElementById('menu');
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
@@ -176,15 +158,6 @@
     document.getElementById('qris').style.display = show ? 'block' : 'none';
   }
 
-  function copyNumber(id) {
-    const text = document.getElementById(id).innerText;
-    navigator.clipboard.writeText(text).then(() => {
-      alert(`Nomor ${text} berhasil disalin ke clipboard.`);
-    }).catch(err => {
-      alert('Gagal menyalin nomor.');
-    });
-  }
-
   function orderNow() {
     const platform = document.querySelector('input[name="platform"]:checked');
     const payment = document.querySelector('input[name="payment"]:checked');
@@ -198,9 +171,9 @@
 
     let url = '';
     if (platform.value === 'whatsapp') {
-      url = `https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
+      url = `https://wa.me/6283856752850?text=${encodeURIComponent(message)}`;
     } else {
-      url = `https://t.me/usernamekamu?text=${encodeURIComponent(message)}`;
+      url = `https://t.me/faa_store?text=${encodeURIComponent(message)}`;
     }
 
     window.location.href = url;
@@ -208,4 +181,4 @@
 </script>
 
 </body>
-</html>
+        </html>

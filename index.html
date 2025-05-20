@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panel Pterodactyl</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+    header {
+      background: #1e90ff;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .package {
+      margin: 10px 0;
+      padding: 10px;
+      background: #f0f0f0;
+      border-radius: 5px;
+    }
+    .package input {
+      margin-right: 10px;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #1e90ff;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0c7adf;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 14px;
+    }
+    hr {
+      margin: 30px 0;
+    }
+    #danaInfo img, #gopayInfo img {
+      display: block;
+      margin-bottom: 10px;
+    }
+    #qrisImage {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      max-width: 200px;
+      display: block;
+      margin-top: 10px;
+    }
+    .note {
+      font-size: 14px;
+      color: #555;
+      margin-top: 10px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Panel Pterodactyl</h1>
+  <p>Pilih paket panel yang sesuai kebutuhanmu</p>
+</header>
+
+<div class="container">
+  <form id="orderForm" onsubmit="submitOrder(event)">
+    <label><strong>Pilih Paket:</strong></label>
+    <div class="package"><input type="radio" name="package" value="2GB RAM, 70% CPU - Rp 1000"> 2GB RAM, 70% CPU - Rp 1000</div>
+    <div class="package"><input type="radio" name="package" value="4GB RAM, 100% CPU - Rp 2000"> 4GB RAM, 100% CPU - Rp 2000</div>
+    <div class="package"><input type="radio" name="package" value="6GB RAM, 100% CPU - Rp 3000"> 6GB RAM, 100% CPU - Rp 3000</div>
+    <div class="package"><input type="radio" name="package" value="8GB RAM, 150% CPU - Rp 4000"> 8GB RAM, 150% CPU - Rp 4000</div>
+    <div class="package"><input type="radio" name="package" value="10GB RAM, 200% CPU - Rp 5000"> 10GB RAM, 200% CPU - Rp 5000</div>
+    <div class="package"><input type="radio" name="package" value="Unlimited RAM & CPU - Rp 7000"> Unlimited RAM & CPU - Rp 7000</div>
+
+    <label for="paymentMethod">Pilih Metode Pembayaran</label>
+    <select id="paymentMethod" onchange="showPaymentInfo()">
+      <option value="">-- Pilih Pembayaran --</option>
+      <option value="dana">Dana</option>
+      <option value="gopay">GoPay</option>
+      <option value="qris">QRIS</option>
+    </select>
+
+    <div id="danaInfo" style="display: none; margin-top: 15px;">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Logo_dana_blue.svg" alt="Dana" width="100"/>
+      <p>Bayar ke nomor: <strong>083856752850</strong></p>
+    </div>
+
+    <div id="gopayInfo" style="display: none; margin-top: 15px;">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Logo_GoPay.svg/512px-Logo_GoPay.svg.png" alt="GoPay" width="100"/>
+      <p>Bayar ke nomor: <strong>083856752850</strong></p>
+    </div>
+
+    <div id="qrisInfo" style="display: none; margin-top: 15px;">
+      <p>Scan kode QR berikut untuk pembayaran:</p>
+      <img id="qrisImage" src="" alt="QRIS Code" />
+    </div>
+
+    <label for="platform">Kirim via:</label>
+    <select id="platform" onchange="toggleContactField()">
+      <option value="">-- Pilih Platform --</option>
+      <option value="whatsapp">WhatsApp</option>
+      <option value="telegram">Telegram</option>
+    </select>
+
+    <div id="waInput" style="display: none;">
+      <label for="waNumber">Nomor WhatsApp (contoh: 6281234567890):</label>
+      <input type="text" id="waNumber" placeholder="6281234567890" />
+    </div>
+
+    <div id="tgInput" style="display: none;">
+      <label for="tgUsername">Username Telegram (contoh: @username):</label>
+      <input type="text" id="tgUsername" placeholder="@username" />
+    </div>
+
+    <button type="submit">Pesan Sekarang</button>
+
+    <p class="note">* Setelah klik Pesan Sekarang, harap kirim bukti pembayaran langsung lewat WhatsApp atau Telegram sesuai platform yang dipilih.</p>
+  </form>
+</div>
+
+<footer>
+  <p>&copy; 2025 FaaStore.Id — Solusi kebutuhan hosting dan gaming terbaik</p>
+</footer>
+
+<script>
+  const qrisImageUrl = "https://i.postimg.cc/JhKgnqSz/IMG-20250314-WA0027.jpg"; // Ganti dengan link QRIS kamu
+
+  function toggleContactField() {
+    const platform = document.getElementById("platform").value;
+    document.getElementById("waInput").style.display = platform === "whatsapp" ? "block" : "none";
+    document.getElementById("tgInput").style.display = platform === "telegram" ? "block" : "none";
+  }
+
+  function showPaymentInfo() {
+    const method = document.getElementById("paymentMethod").value;
+    document.getElementById("danaInfo").style.display = method === "dana" ? "block" : "none";
+    document.getElementById("gopayInfo").style.display = method === "gopay" ? "block" : "none";
+    if (method === "qris") {
+      document.getElementById("qrisInfo").style.display = "block";
+      document.getElementById("qrisImage").src = qrisImageUrl;
+    } else {
+      document.getElementById("qrisInfo").style.display = "none";
+      document.getElementById("qrisImage").src = "";
+    }
+  }
+
+  function submitOrder(e) {
+    e.preventDefault();
+    const selected = document.querySelector('input[name="package"]:checked');
+    const platform = document.getElementById("platform").value;
+    const waNumber = document.getElementById("waNumber").value.trim();
+    const tgUsername = document.getElementById("tgUsername").value.trim();
+    const paymentMethod = document.getElementById("paymentMethod").value;
+
+    if (!selected) {
+      alert("Silakan pilih salah satu paket.");
+      return;
+    }
+
+    if (!paymentMethod) {
+      alert("Silakan pilih metode pembayaran.");
+      return;
+    }
+
+    if (platform === "whatsapp") {
+      if (!waNumber.match(/^628\d{7,}$/)) {
+        alert("Masukkan nomor WhatsApp yang valid (format: 628xxxxxxxxxx).");
+        return;
+      }
+    } else if (platform === "telegram") {
+      if (!tgUsername.match(/^@[\w\d_]{3,}$/)) {
+        alert("Masukkan username Telegram yang valid (format: @username).");
+        return;
+      }
+    } else {
+      alert("Silakan pilih platform pengiriman terlebih dahulu.");
+      return;
+    }
+
+    const message = encodeURIComponent(`Saya ingin memesan paket: ${selected.value}\nMetode Pembayaran: ${paymentMethod}`);
+
+    if (platform === "whatsapp") {
+      window.open(`https://wa.me/6283856752850?text=${message}`, "_blank");
+    } else if (platform === "telegram") {
+      window.open(`https://t.me/faa_store`, "_blank");
+      alert("Silakan kirim pesan di Telegram yang terbuka dengan isi:\n\n" + decodeURIComponent(message));
+    }
+
+    alert("Pesanan sudah dikirim. Jangan lupa kirim bukti pembayaran langsung lewat platform yang dipilih ya.");
+  }
+</script>
+
+</body>
+</html>

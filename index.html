@@ -130,8 +130,8 @@
 
     <label>Pilih Platform:</label>
     <select class="platform-select">
-      <option value="Whatsapp">WhatsApp</option>
-      <option value="Telegram">Telegram</option>
+      <option value="Whatsapp">whatsApp</option>
+      <option value="Telegram">telegram</option>
     </select>
 
     <div id="payment-info"></div>
@@ -189,9 +189,9 @@
 
       const text = encodeURIComponent(`Halo, saya ingin memesan paket berikut:\n\n${paket}\n\nSaya sudah melakukan pembayaran. Mohon dicek.`);
 
-      if (platform === "Whatsapp") {
+      if (platform === "whatsapp") {
         window.location.href = `https://wa.me/6283856752850?text=${text}`;
-      } else if (platform === "Telegram") {
+      } else if (platform === "telegram") {
         window.location.href = `https://t.me/faa_store?text=${text}`;
       } else {
         alert("Silakan pilih platform terlebih dahulu.");

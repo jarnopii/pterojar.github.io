@@ -62,12 +62,14 @@
       margin: 1rem 0;
     }
     .payment-option {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
     }
     .qris-img {
       display: none;
       max-width: 100%;
       margin-top: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
     }
     button {
       background: #007bff;
@@ -85,6 +87,11 @@
       padding: 1rem;
       font-size: 0.9rem;
       color: #888;
+    }
+    .copy-btn {
+      margin-left: 10px;
+      font-size: 0.8rem;
+      padding: 0.3rem 0.5rem;
     }
   </style>
 </head>
@@ -115,10 +122,14 @@
   <h3>Pilih Metode Pembayaran</h3>
   <div class="payment-methods">
     <div class="payment-option">
-      <input type="radio" name="payment" value="dana" onchange="showQR(false)"> Dana (083856752850)
+      <input type="radio" name="payment" value="dana" onchange="showQR(false)"> 
+      Dana (<span id="danaNumber">083856752850</span>) 
+      <button class="copy-btn" onclick="copyNumber('danaNumber')">Copy</button>
     </div>
     <div class="payment-option">
-      <input type="radio" name="payment" value="gopay" onchange="showQR(false)"> GoPay (083856752850)
+      <input type="radio" name="payment" value="gopay" onchange="showQR(false)"> 
+      GoPay (<span id="gopayNumber">083856752850</span>) 
+      <button class="copy-btn" onclick="copyNumber('gopayNumber')">Copy</button>
     </div>
     <div class="payment-option">
       <input type="radio" name="payment" value="qris" onchange="showQR(true)"> QRIS
@@ -143,6 +154,7 @@
 
 <script>
   let selectedPanel = '';
+  
   function toggleMenu() {
     const menu = document.getElementById('menu');
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
@@ -178,7 +190,16 @@
 
     window.location.href = url;
   }
+
+  function copyNumber(id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      alert(`Nomor ${text} berhasil disalin ke clipboard.`);
+    }).catch(() => {
+      alert('Gagal menyalin nomor.');
+    });
+  }
 </script>
 
 </body>
-        </html>
+      </html>

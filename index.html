@@ -189,10 +189,10 @@
 
       const text = encodeURIComponent(`Halo, saya ingin memesan paket berikut:\n\n${paket}\n\nSaya sudah melakukan pembayaran. Mohon dicek.`);
 
-      if (platform === "whatsapp") {
+      if (platform === "Whatsapp") {
         window.location.href = `https://wa.me/6283856752850?text=${text}`;
-      } else if (platform === "telegram") {
-        window.location.href = `https://t.me/fjrnshop?text=${text}`;
+      } else if (platform === "Telegram") {
+        window.location.href = `https://t.me/faa_store?text=${text}`;
       } else {
         alert("Silakan pilih platform terlebih dahulu.");
       }
